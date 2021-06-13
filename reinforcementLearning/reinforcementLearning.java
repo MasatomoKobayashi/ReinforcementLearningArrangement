@@ -1,14 +1,37 @@
 package reinforcementLearning;
 
 public class reinforcementLearning {
-    private static boolean importVariable = config.importVariable;
-    private static PrintType printType = config.printType;
-    private static final int episodes = config.episodes;
-    private static final double alpha = config.alpha;
-    private static final double epsilon = config.epsilon;
 
     public static void main(String[] args) {
+        //àÍâÒé¿çs
+        if (config.once) runOnce();
+
+        //ï°êîâÒé¿çs
+        if (config.multi) {
+            RLRL.firstRLRL();
+            if (config.Random) {
+                while (true) {
+                    RLRL.nextRandomRLRL();
+                }
+            }
+            if (config.Order) {
+                boolean bo = true;
+                while (bo) {
+                    bo = RLRL.nextOrderRLRL();
+                }
+            }
+        }
+    }
+
+    private static void runOnce() {
         Variable var;
+        final boolean importVariable = config.importVariable;
+        final int episodes = config.episodes;
+        final double alpha = config.alpha;
+        final double epsilon = config.epsilon;
+        final boolean normal = config.normalOut;
+        final boolean simple = config.simpleOut;
+        final boolean file = config.fileOut;
 
         if (importVariable) {
             var = new Variable();
@@ -17,19 +40,10 @@ public class reinforcementLearning {
         }
 
         Evaluation eva = new Learning(var);
-        Print p = new Print(var, eva);
 
-        switch (printType) {
-            case simple:
-                p.SimplifiedDisplay();
-                break;
-            case file:
-                p.File();
-                break;
-            case normal:
-            default:
-                p.normalDisplay();
-                break;
-        }
+        Print.setData(eva);
+        if (normal) Print.NormalDisplay();
+        if (simple) Print.SimplifiedDisplay();
+        if (file) Print.File("combination.csv");
     }
 }

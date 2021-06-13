@@ -3,10 +3,11 @@ package reinforcementLearning;
 import java.util.Random;
 
 public class Learning extends Evaluation{
-    private final int x = config.x;
-    private final int n = config.n;
-    private final double r[][] = config.r;
-    private final double gamma = config.gamma;
+    private static final int x = config.x;
+    private static final int n = config.n;
+    private static final double r[][] = config.r;
+
+    private static final double gamma=0.9; //割引率y
 
     private int step; //追加，各エピソードのステップ数（移動した回数）
     private int s, next_s; //現在の状態sと次状態next_s
@@ -17,13 +18,14 @@ public class Learning extends Evaluation{
 
     public Learning(Variable var) {
         super(var);
-        final Random rr = new Random (031); //乱数生成クラス，課題ではこの999を学籍番号下3桁に変更してください。
+        Random rr = new Random (031);
         final int episodes = var.getEpisodes();
         final double alpha = var.getAlpha();
         final double epsilon = var.getEpsilon();
         Q = super.getQ();
 
         for (int epi=0; epi <= episodes; epi++) {
+            System.out.printf("%d/%d a:%f e:%f", epi, episodes, alpha, epsilon);
             s=next_s=11; //初期状態を状態11に変更
             step=0; //追加，ステップ数
             while (true) { //ゴールに到達するまでが1エピソード，【拡張】while文の中身を行動数の増加に合わせて修正
@@ -75,6 +77,7 @@ public class Learning extends Evaluation{
                 if (super.getStep_min()>step) super.setStep_min(step);
                 super.setQ(Q);
             }
+            System.out.print("\r");
         }
     }
 }

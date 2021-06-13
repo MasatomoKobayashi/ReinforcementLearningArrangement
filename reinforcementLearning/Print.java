@@ -6,32 +6,32 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Print {
-    private final int x = config.x;
-    private final int y = config.y;
-    private final int n = config.n;
-    private final double r[][] = config.r;
+    private final static int x = config.x;
+    private final static int y = config.y;
+    private final static int n = config.n;
+    private final static double r[][] = config.r;
 
-    private int Episodes;
-    private int Success;
-    private int step_min;
-    private double Alpha;
-    private double Epsilon;
-    private double SuccessRate;
-    private double AverageStep;
-    private double Q[][];
+    private static int Episodes;
+    private static int Success;
+    private static int step_min;
+    private static double Alpha;
+    private static double Epsilon;
+    private static double SuccessRate;
+    private static double AverageStep;
+    private static double Q[][];
 
-    public Print(Variable var, Evaluation eva) {
-        this.Episodes = var.getEpisodes();
-        this.Success = eva.getSuccess();
-        this.step_min = eva.getStep_min();
-        this.Alpha = var.getAlpha();
-        this.Epsilon = var.getEpsilon();
-        this.SuccessRate = eva.getSuccessRate();
-        this.AverageStep = eva.getAverageStep();
-        this.Q = eva.getQ();
+    public static void setData(Evaluation eva) {
+        Episodes = eva.getEpisodes();
+        Alpha = eva.getAlpha();
+        Epsilon = eva.getEpsilon();
+        Success = eva.getSuccess();
+        step_min = eva.getStep_min();
+        Q = eva.getQ();
+        SuccessRate = eva.getSuccessRate();
+        AverageStep = eva.getAverageStep();
     }
 
-    public void SimplifiedDisplay() {
+    public static void SimplifiedDisplay() {
         System.out.printf("episodes:%d, alpha:%f, epsilon:%f\n", Episodes, Alpha, Epsilon);
         if (Success >0) {
             System.out.printf("Success rate:%f, Ave step:%f, Minimum step:%d\n", SuccessRate, AverageStep, step_min);
@@ -40,9 +40,9 @@ public class Print {
         }
     }
 
-    public void File() {
+    public static void File(String fileName) {
         try {
-            FileWriter file = new FileWriter("combination.csv", true);
+            FileWriter file = new FileWriter(fileName, true);
             PrintWriter pw = new PrintWriter(new BufferedWriter(file));
 
             pw.println(Episodes + "," + Alpha + "," + Epsilon + "," + SuccessRate + "," + AverageStep + "," + step_min);
@@ -52,7 +52,7 @@ public class Print {
         }
     }
 
-    public void normalDisplay() {
+    public static void NormalDisplay() {
         System.out.println("==="+Episodes+"エピソード学習終了後の行動価値関数===");
         for(int i=0;i < n;i++) {
             System.out.printf("Q{s"+i+", →)=%4.3f", Q[i][0]);

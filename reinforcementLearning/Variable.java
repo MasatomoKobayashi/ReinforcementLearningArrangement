@@ -10,28 +10,45 @@ public class Variable {
     public Variable() {
         Scanner sc = new Scanner(System.in);
         System.out.print("episodes:");
-        this.episodes = sc.nextInt();
+        setEpisodes(sc.nextInt());
         System.out.print("alpha:");
-        this.alpha = sc.nextDouble();
+        setAlpha(sc.nextDouble());
         System.out.print("epsilon:");
-        this.epsilon = sc.nextDouble();
+        setEpsilon(sc.nextDouble());
     }
 
     public Variable(int episodes, double alpha, double epsilon) {
+        setEpisodes(episodes);
+        setAlpha(alpha);
+        setEpsilon(epsilon);
+    }
+
+    public void setEpisodes(int episodes) {
+        if (episodes < 0) episodes = 0;
         this.episodes = episodes;
-        this.alpha = alpha;
-        this.epsilon = epsilon;
     }
 
     public int getEpisodes() {
-        return this.episodes;
+        return episodes;
+    }
+
+    public void setAlpha(double alpha) {
+        if (alpha < 0) alpha = 0;
+        if (alpha > 1) alpha = 1;
+        this.alpha = alpha;
     }
 
     public double getAlpha() {
-        return this.alpha;
+        return alpha;
+    }
+
+    public void setEpsilon(double epsilon) {
+        if (epsilon < 0) epsilon = 0;
+        if (epsilon > 0.3) epsilon = 0.3;
+        this.epsilon = epsilon;
     }
 
     public double getEpsilon() {
-        return this.epsilon;
+        return epsilon;
     }
 }
