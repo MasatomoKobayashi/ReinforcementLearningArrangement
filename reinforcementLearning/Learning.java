@@ -18,7 +18,7 @@ public class Learning extends Evaluation{
 
     public Learning(Variable var) {
         super(var);
-        Random rr = new Random (031);
+        Random rr = new Random (053);
         final int episodes = var.getEpisodes();
         final double alpha = var.getAlpha();
         final double epsilon = var.getEpsilon();

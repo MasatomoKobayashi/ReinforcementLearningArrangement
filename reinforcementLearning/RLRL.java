@@ -10,7 +10,7 @@ public class RLRL {
     private static VariableData excellence;
     private static VariableData combination;
     private static int alpha = 0;
-    private static int epsilon = 0;
+    private static int epsilon = 1;
     private static double o[][] = new double[10][1];
     private static double varEva;
 
@@ -18,7 +18,7 @@ public class RLRL {
         //bad = new VariableData("bad.csv");
         excellence = new VariableData("excellence.csv");
         combination = new VariableData("combination.csv");
-        var = new Variable(50000, 0.0001, 0.06571466);
+        var = new Variable(50000, 0.00007, 0.100);
         for (int i = 0; i < 10; i++) {
             o[i][0] = 0;
         }
@@ -29,7 +29,7 @@ public class RLRL {
             eva = new Learning(var);
             varEva = varEva();
         }
-        //if (alpha*epsilon == 1/seimitusa*0.3/seimitusa) return false;
+        if (alpha*epsilon == 1/seimitusa*0.3/seimitusa) return false;
         if (var.getEpsilon() == 0.065715) return false;
         return true;
     }
@@ -44,31 +44,31 @@ public class RLRL {
         varEva = varEva();
         if (varEva > 3) {
             while (excellence.isDataExistence(var)) {
-                var.setAlpha(eva.getAlpha() + seimitusa * rr.nextInt((int)(1/seimitusa - eva.getAlpha()*1/seimitusa)));
-                var.setEpsilon(eva.getEpsilon() - seimitusa * rr.nextInt((int)(0.3/seimitusa - eva.getEpsilon()*0.3/seimitusa)));
+                var.setAlpha(eva.getAlpha() + seimitusa * rr.nextInt((int)(0.001/seimitusa - eva.getAlpha()*1/seimitusa)));
+                var.setEpsilon(eva.getEpsilon() - seimitusa * rr.nextInt((int)(0.2/seimitusa - eva.getEpsilon()*0.3/seimitusa)));
             } return;
         }
         while(combination.isDataExistence(var)) {
-            var.setAlpha(seimitusa + seimitusa * rr.nextInt((int)(1/seimitusa - 1)));
-            var.setEpsilon(seimitusa + seimitusa * rr.nextInt((int)(0.3/seimitusa - 1)));
+            var.setAlpha(seimitusa + seimitusa * rr.nextInt((int)(0.001/seimitusa - 1)));
+            var.setEpsilon(seimitusa + seimitusa * rr.nextInt((int)(0.2/seimitusa - 1)));
         }
     }
 
     private static boolean varOrderChange() {
-        if (var.getEpisodes() != 50000) var.setEpisodes(50000);
+        /*if (var.getEpisodes() != 50000) var.setEpisodes(50000);
         if (var.getEpsilon() != 0.06571466) var.setEpsilon(0.06571466);
         var.setAlpha(var.getAlpha() + seimitusa);
-        return true;
-        /*if (alpha != 1/seimitusa) {
+        return true;*/
+        if (alpha != 0.001/seimitusa) {
             alpha++;
             var.setAlpha(seimitusa * alpha);
             var.setEpsilon(seimitusa * epsilon);
-        } else if (epsilon != 0.3/seimitusa) {
+        } else if (epsilon != 0.2/seimitusa) {
             alpha = 1;
             epsilon++;
             var.setAlpha(seimitusa * alpha);
             var.setEpsilon(seimitusa * epsilon);
-        } return !combination.isDataExistence(var);*/
+        } return !combination.isDataExistence(var);
     }
 
     private static double varEva() {

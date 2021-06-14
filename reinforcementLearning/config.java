@@ -30,6 +30,6 @@ public class config {
             public static final boolean fileOut = false;// (CSVèoóÕ)
 
     public static final boolean multi = true;
-        public static final boolean Order = true;
-        public static final boolean Random = false;
+        public static final boolean Order = false;
+        public static final boolean Random = true;
 }
